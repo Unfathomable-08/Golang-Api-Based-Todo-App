@@ -1,4 +1,3 @@
-const API_BASE = 'http://localhost:8080/todo';
 const todoInput = document.getElementById('todoInput');
 const addBtn = document.getElementById('addBtn');
 const todoList = document.getElementById('todoList');
@@ -11,7 +10,7 @@ let editingId = null;
 async function loadTodos() {
     try {
         todoList.innerHTML = '<div class="empty-state">Loading...</div>';
-        const res = await fetch(API_BASE);
+        const res = await fetch("http://localhost:8080/todo");
         if (!res.ok) throw new Error('Failed to fetch');
         todos = await res.json();
         renderTodos();
@@ -71,7 +70,7 @@ async function addTodo() {
     addBtn.textContent = 'Adding...';
 
     try {
-        const res = await fetch(API_BASE, {
+        const res = await fetch("http://localhost:8080/todo", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ title, completed: false })
@@ -102,7 +101,7 @@ async function toggleComplete(id) {
     if (!todo) return;
 
     try {
-        const res = await fetch(`${API_BASE}/${id}`, {
+        const res = await fetch(`http://localhost:8080/todo/${id}`, {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ ...todo, completed: !todo.completed })
@@ -122,7 +121,7 @@ async function deleteTodo(id) {
     if (!confirm('Delete this task?')) return;
 
     try {
-        const res = await fetch(`${API_BASE}/${id}`, { method: 'DELETE' });
+        const res = await fetch(`http://localhost:8080/todo/${id}`, { method: 'DELETE' });
         if (!res.ok) throw new Error();
 
         todos = todos.filter(t => t.id !== id);
@@ -156,7 +155,7 @@ function startEdit(id, element) {
         }
 
         try {
-            const res = await fetch(`${API_BASE}/${id}`, {
+            const res = await fetch(`"http://localhost:8080/todo"/${id}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ ...todo, title: newTitle })
