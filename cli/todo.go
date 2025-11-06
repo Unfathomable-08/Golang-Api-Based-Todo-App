@@ -46,7 +46,7 @@ func addTodo(title string) {
 
 func listTodos() {
 	if len(todos) == 0 {
-		fmt.Println("📭 No todos yet.")
+		fmt.Println("No todos yet.")
 		return
 	}
 
@@ -82,7 +82,7 @@ func deleteTodo(id int) {
 		if t.ID == id {
 			todos = append(todos[:i], todos[i+1:]...)
 			saveTodos()
-			fmt.Println("🗑️ Todo deleted:", t.Title)
+			fmt.Println("Todo deleted:", t.Title)
 			return
 		}
 	}
