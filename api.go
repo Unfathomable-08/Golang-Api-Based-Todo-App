@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"io"
 	"net/http"
-	"os"
 )
 
 func getTodos(w http.ResponseWriter) {
@@ -58,21 +57,4 @@ func deleteTodo(w http.ResponseWriter, r *http.Request, id int) {
 		}
 	}
 	http.NotFound(w, r)
-}
-
-func loadTodos() {
-	data, err := os.ReadFile("todo.json")
-	if err != nil {
-		todos = []Todo{}
-		return
-	}
-	json.Unmarshal(data, &todos)
-	if len(todos) > 0 {
-		nextID = todos[len(todos)-1].ID + 1
-	}
-}
-
-func saveTodos() {
-	data, _ := json.MarshalIndent(todos, "", "  ")
-	os.WriteFile("todo.json", data, 0644)
 }
